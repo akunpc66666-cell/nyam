@@ -1,0 +1,6 @@
+# URL API website setelah deploy (jangan cantumkan garis miring tambahan).
+api-url: "https://DOMAIN-VERCEL-KAMU/api/baltop"
+# Harus sama persis dengan environment variable NYAM_INGEST_SECRET di Vercel. Jaga rahasia ini.
+shared-secret: "GANTI_DENGAN_SECRET_YANG_SAMA_DENGAN_VERCEL"
+# Pembaruan otomatis dalam detik (minimum 30).
+update-interval-seconds: 60
