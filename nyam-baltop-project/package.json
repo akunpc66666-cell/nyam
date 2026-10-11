@@ -1,6 +1,0 @@
-{
-  "name": "nyam-server-baltop",
-  "version": "1.0.0",
-  "private": true,
-  "description": "NYAM SERVER website with a live Minecraft economy leaderboard API"
-}
