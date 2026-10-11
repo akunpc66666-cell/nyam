@@ -1,0 +1,7 @@
+name: NYAMBalanceBridge
+version: 1.0.0
+main: id.nyam.baltop.NyamBalanceBridge
+api-version: '1.20'
+softdepend: [Vault, Essentials, EssentialsX]
+description: Publishes the NYAM server's top Vault balances to its website.
+author: NYAM
