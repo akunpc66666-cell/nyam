@@ -4220,21 +4220,25 @@ footer{
 
 
 <style id="performance-mode-css">
-/* Mode Performa: kurangi kerja animasi dan efek dekoratif untuk perangkat lemah */
+/* Pilihan mode untuk menyesuaikan website dengan perangkat pengunjung */
 html.performance-mode *, html.performance-mode *::before, html.performance-mode *::after {
   animation-duration: 0.001ms !important; animation-iteration-count: 1 !important;
   transition-duration: 0.001ms !important; scroll-behavior: auto !important;
   caret-color: transparent !important;
 }
-html.performance-mode .mc-cine-block, html.performance-mode canvas,
-html.performance-mode .particle, html.performance-mode .particles,
-html.performance-mode .cursor-glow, html.performance-mode .mouse-glow,
-html.performance-mode .scanline, html.performance-mode .noise-overlay { display:none !important; }
+html.performance-mode .fx-field, html.performance-mode .mc-cine-block,
+html.performance-mode canvas, html.performance-mode .particle,
+html.performance-mode .particles, html.performance-mode .cursor-glow,
+html.performance-mode .cursor-ring, html.performance-mode .mouse-glow,
+html.performance-mode .scanline, html.performance-mode .noise-overlay,
+html.performance-mode body::after { display:none !important; }
 html.performance-mode .rank, html.performance-mode .reveal { opacity:1 !important; transform:none !important; filter:none !important; }
-html.performance-mode * { box-shadow:none !important; text-shadow:none !important; }
-#mode-choice-backdrop{position:fixed;inset:0;z-index:999999;background:rgba(4,5,6,.88);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:20px}
-#mode-choice-backdrop[hidden]{display:none}
-.mode-choice{width:min(540px,100%);background:#101316;color:#f4f4f4;border:1px solid rgba(237,194,127,.35);border-radius:20px;padding:28px;box-shadow:0 20px 70px #0009;font-family:Inter,Arial,sans-serif}
+html.performance-mode * { box-shadow:none !important; text-shadow:none !important; filter:none !important; }
+#mode-menu-toggle{position:fixed;right:14px;bottom:14px;z-index:999990;padding:11px 15px;border:1px solid #d99a48;border-radius:12px;background:#17120d;color:#ffe0ad;font:800 12px Inter,Arial,sans-serif;cursor:pointer;box-shadow:0 5px 20px #0009;letter-spacing:.03em}
+#mode-menu-toggle:hover{background:#302114;border-color:#ffc667}
+#mode-choice-backdrop{position:fixed;inset:0;z-index:999999;background:rgba(4,5,6,.92);display:flex;align-items:center;justify-content:center;padding:20px}
+#mode-choice-backdrop[hidden]{display:none!important}
+.mode-choice{width:min(540px,100%);background:#101316;color:#f4f4f4;border:1px solid rgba(237,194,127,.45);border-radius:20px;padding:28px;box-shadow:0 20px 70px #0009;font-family:Inter,Arial,sans-serif}
 .mode-choice .mode-kicker{font-size:10px;letter-spacing:.2em;color:#edc27f;font-weight:900}
 .mode-choice h2{font-size:clamp(23px,5vw,32px);margin:12px 0 8px;font-weight:900}
 .mode-choice p{color:#aeb5ba;font-size:14px;line-height:1.6;margin:0 0 20px}
@@ -4243,49 +4247,53 @@ html.performance-mode * { box-shadow:none !important; text-shadow:none !importan
 .mode-choice-btn strong{display:block;font-size:15px;margin-bottom:7px}
 .mode-choice-btn span{display:block;font-size:12px;line-height:1.5;color:#aeb5ba}
 .mode-choice-btn.primary{border-color:#bd8d4f;background:linear-gradient(145deg,#352719,#1a1b1c)}
-.mode-choice-btn:focus-visible{outline:2px solid #edc27f;outline-offset:3px}
+.mode-choice-btn:focus-visible,#mode-menu-toggle:focus-visible{outline:2px solid #edc27f;outline-offset:3px}
 .mode-choice-note{font-size:11px!important;margin:16px 0 0!important;color:#818a90!important}
 @media(max-width:420px){.mode-choice{padding:22px 18px}.mode-choice-options{grid-template-columns:1fr}.mode-choice-btn{padding:14px}}
-@media(prefers-reduced-motion:reduce){html:not(.normal-mode) *,html:not(.normal-mode) *::before,html:not(.normal-mode) *::after{animation-duration:.001ms!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
+@media(prefers-reduced-motion:reduce){html *,html *::before,html *::after{animation-duration:.001ms!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
 </style>
+<button id="mode-menu-toggle" type="button" aria-haspopup="dialog" aria-controls="mode-choice-backdrop">⚙ MODE WEBSITE</button>
 <div id="mode-choice-backdrop" hidden role="dialog" aria-modal="true" aria-labelledby="mode-choice-title">
   <div class="mode-choice">
     <div class="mode-kicker">NYAM SERVER / EXPERIENCE</div>
     <h2 id="mode-choice-title">Pilih mode website</h2>
-    <p>Sesuaikan pengalaman dengan perangkatmu. Pilihan bisa diganti nanti lewat tombol pengaturan mode.</p>
+    <p>Sesuaikan website dengan perangkatmu. Kamu bisa mengganti pilihan kapan saja lewat tombol MODE WEBSITE di kanan bawah.</p>
     <div class="mode-choice-options">
       <button class="mode-choice-btn primary" type="button" data-site-mode="normal"><strong>✨ Normal</strong><span>Animasi dan efek visual website tetap aktif.</span></button>
-      <button class="mode-choice-btn" type="button" data-site-mode="performance"><strong>⚡ Performa</strong><span>Animasi, glow, dan efek dekoratif dikurangi agar lebih ringan.</span></button>
+      <button class="mode-choice-btn" type="button" data-site-mode="performance"><strong>⚡ Performa</strong><span>Animasi, glow, dan efek dekoratif dikurangi supaya lebih ringan di HP/PC kentang.</span></button>
     </div>
-    <p class="mode-choice-note">Mode Performa tidak mengubah data atau fitur server.</p>
+    <p class="mode-choice-note">Mode Performa mengurangi efek visual, bukan mengubah data atau fitur server.</p>
   </div>
 </div>
 <script id="site-performance-mode-script">
 (function(){
   const root=document.documentElement, key='nyam-site-mode';
+  const backdrop=document.getElementById('mode-choice-backdrop');
+  const toggle=document.getElementById('mode-menu-toggle');
+  if(!backdrop||!toggle)return;
+  let saved=null;try{saved=localStorage.getItem(key)}catch(e){}
   function apply(mode){
     const safe=mode==='performance'?'performance':'normal';
     root.classList.toggle('performance-mode',safe==='performance');
     root.classList.toggle('normal-mode',safe==='normal');
     try{localStorage.setItem(key,safe)}catch(e){}
-    const backdrop=document.getElementById('mode-choice-backdrop');
-    if(backdrop)backdrop.hidden=true;
+    toggle.textContent='⚙ MODE: '+(safe==='performance'?'PERFORMA':'NORMAL');
+    backdrop.hidden=true;
   }
-  let saved=null;try{saved=localStorage.getItem(key)}catch(e){}
-  if(saved==='performance'||saved==='normal')apply(saved);
-  else root.classList.add('performance-mode');
-  document.addEventListener('DOMContentLoaded',function(){
-    const backdrop=document.getElementById('mode-choice-backdrop');
-    if(!backdrop)return;
-    if(saved!=='performance'&&saved!=='normal')backdrop.hidden=false;
-    backdrop.querySelectorAll('[data-site-mode]').forEach(btn=>btn.addEventListener('click',()=>apply(btn.dataset.siteMode)));
-    const toggle=document.createElement('button');
-    toggle.type='button';toggle.textContent='⚙ Mode: '+(saved==='performance'?'Performa':'Normal');
-    toggle.setAttribute('aria-label','Ganti mode performa website');
-    toggle.style.cssText='position:fixed;right:14px;bottom:14px;z-index:99990;padding:10px 13px;border:1px solid #8d704b;border-radius:12px;background:#111519;color:#f2d5a4;font:700 12px Inter,Arial,sans-serif;cursor:pointer;box-shadow:0 5px 20px #0007';
-    toggle.addEventListener('click',()=>{const next=root.classList.contains('performance-mode')?'normal':'performance';apply(next);toggle.textContent='⚙ Mode: '+(next==='performance'?'Performa':'Normal')});
-    document.body.appendChild(toggle);
+  if(saved==='performance'||saved==='normal'){
+    apply(saved);
+  }else{
+    // Prefer a lighter first render, then ask each new visitor to choose.
+    root.classList.add('performance-mode');
+    toggle.textContent='⚙ MODE WEBSITE';
+    backdrop.hidden=false;
+  }
+  toggle.addEventListener('click',()=>{backdrop.hidden=false});
+  backdrop.querySelectorAll('[data-site-mode]').forEach(btn=>{
+    btn.addEventListener('click',()=>apply(btn.dataset.siteMode));
   });
+  backdrop.addEventListener('click',event=>{if(event.target===backdrop&& (saved==='normal'||saved==='performance'))backdrop.hidden=true});
+  document.addEventListener('keydown',event=>{if(event.key==='Escape'&&(saved==='normal'||saved==='performance'))backdrop.hidden=true});
 })();
 </script>
 

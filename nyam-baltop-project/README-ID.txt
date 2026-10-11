@@ -2,6 +2,11 @@
 
 Paket ini mempertahankan desain website yang kamu kirim dan menambahkan jalur untuk membaca 10 saldo tertinggi dari ekonomi Paper/Vault. Website **belum akan menampilkan saldo live** sampai konfigurasi Vercel, Redis, dan plugin dilakukan.
 
+## Menu Normal / Performa
+- Saat pengunjung pertama kali membuka website, menu pilihan **Normal** atau **Performa** akan tampil.
+- Tombol **MODE WEBSITE** selalu tersedia di kanan bawah untuk membuka menu itu lagi.
+- Pilihan disimpan di browser pengunjung. Mode Performa mengurangi animasi, glow, efek partikel, dan beberapa bayangan agar lebih ringan di perangkat spek rendah.
+
 ## Isi paket
 - `index.html` — website NYAM dengan tampilan Balance Top yang mengambil data dari `/api/baltop`.
 - `api/baltop.js` — API Vercel; menerima data dari plugin dan menyimpannya di Redis.
